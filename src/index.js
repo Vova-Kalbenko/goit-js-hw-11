@@ -7,44 +7,47 @@ const lightbox = new SimpleLightbox('.lightbox', {
   captionPosition: 'bottom',
   captionsData: 'alt',
   captionDelay: 250,
-});
+});  
+
 
 const formEL = document.querySelector('.search-form');
 const galleryEl = document.querySelector('.gallery');
 const loadMoreBtnEl = document.querySelector('.load-more');
 
-let page = 0;
-let searchQuery = '';
+let page = 0;   
+let searchQuery = ''; 
 
 formEL.addEventListener('submit', handleSubmitForm);
 
 loadMoreBtnEl.addEventListener('click', handleLoadMoreBtn);
 
-loadMoreBtnEl.classList.add('is-hidden');
+loadMoreBtnEl.classList.add('is-hidden'); 
 async function handleSubmitForm(e) {
   e.preventDefault();
-  page = 0;
-  galleryEl.innerHTML = '';
-  try {
-    searchQuery = e.target.elements.searchQuery.value.trim();
+  page = 0;   
+  galleryEl.innerHTML = '';  
 
-    if (!searchQuery) {
+  try {   
+    searchQuery = e.target.elements.searchQuery.value.trim();     
+
+    if (!searchQuery)  {     
       Notiflix.Notify.warning('Enter valid query');
       loadMoreBtnEl.classList.add('is-hidden');
       return;
     }
-    const photos = await searchImages();
-
-    if (!photos) {
+   
+    const photos = await searchImages();  
+    if (!photos) { 
       Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
       return;
     }
     loadMoreBtnEl.classList.remove('is-hidden');
-    const markup = generateMarkup(photos);
-    galleryEl.innerHTML = markup;
 
+    const markup = generateMarkup(photos);    
+   
+    galleryEl.innerHTML = markup;  
     Notiflix.Notify.success(`Hooray! We found ${photos.totalHits} images.`);
     lightbox.refresh();
   } catch (error) {
@@ -72,7 +75,7 @@ function createMarkup({
         <li class="cards-item">
          <div class="card">
            <a href="${largeImageURL}" class="lightbox">
-            <img src="${webformatURL}" alt="${tags}" width="300" height="200"/>
+            <img src="${webformatURL}" alt="${tags}" width="300" height="200" loading="lazy" />
              </a>
             <div class="info">
               <p class="info-item">
