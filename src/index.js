@@ -118,5 +118,14 @@ function generateMarkup(photos) {
 function appendNewToPhotos(markup) {
   galleryEl.insertAdjacentHTML('beforeend', markup);
   lightbox.refresh();
+  scrollPage();
 }
 
+function scrollPage() {
+  const { height: cardHeight } =
+    galleryEl.firstElementChild.getBoundingClientRect();
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
+}
